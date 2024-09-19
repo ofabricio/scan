@@ -7,6 +7,42 @@ import (
 
 type Bytes []byte
 
+// Match tells if the next bytes are equal to v.
+// Advances the scanner if true.
+func (s *Bytes) Match(v string) bool {
+	if s.Equal(v) {
+		return s.Advance(len(v))
+	}
+	return false
+}
+
+// MatchFold tells if the next bytes are equal to v
+// ignoring case. Advances the scanner if true.
+func (s *Bytes) MatchFold(v string) bool {
+	if s.EqualFold(v) {
+		return s.Advance(len(v))
+	}
+	return false
+}
+
+// MatchChar tells if the next rune is equal to any rune in v.
+// Advances the scanner if true.
+func (s *Bytes) MatchChar(v string) bool {
+	if s.EqualChar(v) {
+		return s.Next()
+	}
+	return false
+}
+
+// MatchFunc tells if the next rune satisfies the function v.
+// Advances the scanner if true.
+func (s *Bytes) MatchFunc(v func(rune) bool) bool {
+	if s.EqualFunc(v) {
+		return s.Next()
+	}
+	return false
+}
+
 // Equal tells if the next bytes are equal to v.
 func (s Bytes) Equal(v string) bool {
 	return bytes.HasPrefix(s, []byte(v))
