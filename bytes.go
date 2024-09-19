@@ -7,6 +7,36 @@ import (
 
 type Bytes []byte
 
+// Until advances the scanner until the next bytes are equal to v.
+// Returns true if it advanced.
+func (s *Bytes) Until(v string) bool {
+	m := false
+	for s.More() && !s.Equal(v) {
+		m = s.Next()
+	}
+	return m
+}
+
+// UntilChar advances the scanner until the next rune is equal to any rune in v.
+// Returns true if it advanced.
+func (s *Bytes) UntilChar(v string) bool {
+	m := false
+	for s.More() && !s.EqualChar(v) {
+		m = s.Next()
+	}
+	return m
+}
+
+// UntilFunc advances the scanner until the next rune satisfies the function v.
+// Returns true if it advanced.
+func (s *Bytes) UntilFunc(v func(rune) bool) bool {
+	m := false
+	for s.More() && !s.EqualFunc(v) {
+		m = s.Next()
+	}
+	return m
+}
+
 // While advances the scanner while the next bytes are equal to v.
 // Returns true if it advanced.
 func (s *Bytes) While(v string) bool {

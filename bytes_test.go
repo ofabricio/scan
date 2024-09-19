@@ -5,6 +5,62 @@ import (
 	"unicode"
 )
 
+func ExampleBytes_Until() {
+
+	s := Bytes("abc..def..")
+
+	fmt.Println(s.Until(".."))
+	fmt.Println(s)
+	fmt.Println(s.Until(".."))
+	fmt.Println(s)
+
+	// Output:
+	// true
+	// ..def..
+	// false
+	// ..def..
+}
+
+func ExampleBytes_UntilChar() {
+
+	s := Bytes("abc.def")
+
+	fmt.Println(s.UntilChar(".,"))
+	fmt.Println(s)
+
+	s = Bytes("abc,def")
+
+	fmt.Println(s.UntilChar(".,"))
+	fmt.Println(s)
+
+	fmt.Println(s.UntilChar(".,"))
+	fmt.Println(s)
+
+	// Output:
+	// true
+	// .def
+	// true
+	// ,def
+	// false
+	// ,def
+}
+
+func ExampleBytes_UntilFunc() {
+
+	s := Bytes("abc.def")
+
+	fmt.Println(s.UntilFunc(unicode.IsPunct))
+	fmt.Println(s)
+	fmt.Println(s.UntilFunc(unicode.IsPunct))
+	fmt.Println(s)
+
+	// Output:
+	// true
+	// .def
+	// false
+	// .def
+}
+
 func ExampleBytes_While() {
 
 	s := Bytes("ababc")
