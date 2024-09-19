@@ -5,6 +5,26 @@ import (
 	"unicode"
 )
 
+func ExampleBytes_TextWith() {
+
+	s := Bytes("abc")
+
+	Word := func(s *Bytes) bool {
+		return s.WhileFunc(unicode.IsLetter)
+	}
+
+	var v string
+	fmt.Println(s.TextWith(&v, Word))
+	fmt.Println(v)
+	fmt.Println(s.TextWith(&v, Word))
+
+	// Output:
+	// true
+	// abc
+	// false
+	//
+}
+
 func ExampleBytes_Edge() {
 
 	s := Bytes("a\nb\r\nc")

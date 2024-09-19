@@ -8,6 +8,17 @@ import (
 
 type Bytes []byte
 
+// TextWith set the matched token from f to dst.
+// Returns true if the token was matched.
+func (s *Bytes) TextWith(dst *string, f func(*Bytes) bool) bool {
+	if m := s.Mark(); f(s) {
+		*dst = s.Text(m)
+		return true
+	}
+	*dst = ""
+	return false
+}
+
 // Edge tells if the scanner is at the end of a line
 // or at the end of the input.
 func (s *Bytes) Edge() bool {
