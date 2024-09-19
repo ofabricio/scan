@@ -5,6 +5,25 @@ import (
 	"unicode"
 )
 
+func ExampleBytes_Edge() {
+
+	s := Bytes("a\nb\r\nc")
+
+	fmt.Println(s.Edge())
+	s.Match("a")
+	fmt.Println(s.Edge())
+	s.Match("\nb")
+	fmt.Println(s.Edge())
+	s.Match("\r\nc")
+	fmt.Println(s.Edge())
+
+	// Output:
+	// false
+	// true
+	// true
+	// true
+}
+
 func ExampleBytes_Spaces() {
 
 	s := Bytes("  ")

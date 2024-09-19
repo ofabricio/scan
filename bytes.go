@@ -8,6 +8,12 @@ import (
 
 type Bytes []byte
 
+// Edge tells if the scanner is at the end of a line
+// or at the end of the input.
+func (s *Bytes) Edge() bool {
+	return s.Empty() || s.EqualChar("\n\r")
+}
+
 // Space advances the scanner if the next rune is a space.
 func (s *Bytes) Space() bool {
 	return s.MatchFunc(unicode.IsSpace)
