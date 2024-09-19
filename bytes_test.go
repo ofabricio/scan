@@ -5,6 +5,32 @@ import (
 	"unicode"
 )
 
+func Example() {
+
+	var s Bytes = []byte(`
+		KeyA = ValA
+		KeyB = ValB
+	`)
+
+	Word := func(s *Bytes) bool {
+		return s.WhileFunc(unicode.IsLetter)
+	}
+
+	for s.Spaces(); s.More(); s.Spaces() {
+		var k, v string
+		if s.TextWith(&k, Word) && s.Spaces() && s.Match("=") && s.Spaces() && s.TextWith(&v, Word) {
+			fmt.Println(k, v)
+			continue
+		}
+		fmt.Println("Syntax error", s)
+		break
+	}
+
+	// Output:
+	// KeyA ValA
+	// KeyB ValB
+}
+
 func ExampleBytes_TextWith() {
 
 	s := Bytes("abc")
