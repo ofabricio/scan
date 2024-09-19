@@ -7,6 +7,46 @@ import (
 
 type Bytes []byte
 
+// While advances the scanner while the next bytes are equal to v.
+// Returns true if it advanced.
+func (s *Bytes) While(v string) bool {
+	m := false
+	for s.Match(v) {
+		m = true
+	}
+	return m
+}
+
+// While advances the scanner while the next bytes are equal to v
+// ignoring case. Returns true if it advanced.
+func (s *Bytes) WhileFold(v string) bool {
+	m := false
+	for s.MatchFold(v) {
+		m = true
+	}
+	return m
+}
+
+// WhileChar advances the scanner while the next rune is equal to
+// any rune in v. Returns true if it advanced.
+func (s *Bytes) WhileChar(v string) bool {
+	m := false
+	for s.MatchChar(v) {
+		m = true
+	}
+	return m
+}
+
+// WhileFunc advances the scanner while the next rune satisfies
+// the function v. Returns true if it advanced.
+func (s *Bytes) WhileFunc(v func(rune) bool) bool {
+	m := false
+	for s.MatchFunc(v) {
+		m = true
+	}
+	return m
+}
+
 // Match tells if the next bytes are equal to v.
 // Advances the scanner if true.
 func (s *Bytes) Match(v string) bool {

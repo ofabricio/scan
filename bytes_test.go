@@ -5,6 +5,61 @@ import (
 	"unicode"
 )
 
+func ExampleBytes_While() {
+
+	s := Bytes("ababc")
+
+	fmt.Println(s.While("ab"))
+	fmt.Println(s.While("d"))
+	fmt.Println(s)
+
+	// Output:
+	// true
+	// false
+	// c
+}
+
+func ExampleBytes_WhileFold() {
+
+	s := Bytes("ababc")
+
+	fmt.Println(s.WhileFold("AB"))
+	fmt.Println(s.WhileFold("D"))
+	fmt.Println(s)
+
+	// Output:
+	// true
+	// false
+	// c
+}
+
+func ExampleBytes_WhileChar() {
+
+	s := Bytes("ababc")
+
+	fmt.Println(s.WhileChar("ba"))
+	fmt.Println(s.WhileChar("d"))
+	fmt.Println(s)
+
+	// Output:
+	// true
+	// false
+	// c
+}
+func ExampleBytes_WhileFunc() {
+
+	s := Bytes("abab.")
+
+	fmt.Println(s.WhileFunc(unicode.IsLetter))
+	fmt.Println(s.WhileFunc(unicode.IsNumber))
+	fmt.Println(s)
+
+	// Output:
+	// true
+	// false
+	// .
+}
+
 func ExampleBytes_Match() {
 
 	s := Bytes("ab")
