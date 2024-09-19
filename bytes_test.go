@@ -5,6 +5,34 @@ import (
 	"unicode"
 )
 
+func ExampleBytes_Spaces() {
+
+	s := Bytes("  ")
+
+	fmt.Println(s.Spaces())
+	fmt.Println(s.String() == "")
+	fmt.Println(s.Spaces())
+
+	// Output:
+	// true
+	// true
+	// false
+}
+
+func ExampleBytes_Space() {
+
+	s := Bytes(" ")
+
+	fmt.Println(s.Space())
+	fmt.Println(s.String() == "")
+	fmt.Println(s.Space())
+
+	// Output:
+	// true
+	// true
+	// false
+}
+
 func ExampleBytes_Until() {
 
 	s := Bytes("abc..def..")

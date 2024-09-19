@@ -2,10 +2,21 @@ package scan
 
 import (
 	"bytes"
+	"unicode"
 	"unicode/utf8"
 )
 
 type Bytes []byte
+
+// Space advances the scanner if the next rune is a space.
+func (s *Bytes) Space() bool {
+	return s.MatchFunc(unicode.IsSpace)
+}
+
+// Spaces advances the scanner while the next rune is a space.
+func (s *Bytes) Spaces() bool {
+	return s.WhileFunc(unicode.IsSpace)
+}
 
 // Until advances the scanner until the next bytes are equal to v.
 // Returns true if it advanced.
