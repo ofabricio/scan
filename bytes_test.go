@@ -2,6 +2,7 @@ package scan
 
 import (
 	"fmt"
+	"strings"
 	"unicode"
 )
 
@@ -31,6 +32,40 @@ func Example() {
 	// KeyB ValB
 }
 
+func ExampleBytes_MatchString() {
+
+	s := Bytes(`
+		""
+		"a"
+		"abc"
+		"\""
+		"\"\""
+		"\"abc\""
+		"a\"bc"
+		"ab
+		cd"
+	`)
+
+	for s.Spaces(); s.More(); s.Spaces() {
+		if m := s.Mark(); s.MatchString(`"`) {
+			str := s.Text(m)
+			fmt.Println(strings.ReplaceAll(str, "\n", "\\n"))
+			continue
+		}
+		s.Next()
+	}
+
+	// Output:
+	// ""
+	// "a"
+	// "abc"
+	// "\""
+	// "\"\""
+	// "\"abc\""
+	// "a\"bc"
+	// "ab\n		cd"
+}
+
 func ExampleBytes_TextWith() {
 
 	s := Bytes("abc")
@@ -48,7 +83,6 @@ func ExampleBytes_TextWith() {
 	// true
 	// abc
 	// false
-	//
 }
 
 func ExampleBytes_Edge() {

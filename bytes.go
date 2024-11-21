@@ -8,6 +8,21 @@ import (
 
 type Bytes []byte
 
+func (s *Bytes) MatchString(quote string) bool {
+	if s.Match(quote) {
+		for s.More() {
+			if s.Match(quote) {
+				return true
+			}
+			if s.Match(`\`) && s.Match(quote) {
+				continue
+			}
+			s.Next()
+		}
+	}
+	return false
+}
+
 // TextWith set the matched token from f to dst.
 // Returns true if the token was matched.
 func (s *Bytes) TextWith(dst *string, f func(*Bytes) bool) bool {
