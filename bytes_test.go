@@ -86,26 +86,25 @@ func ExampleBytes_MatchString() {
 		"a\"bc"
 		"ab
 		cd"
+		"abc
 	`)
 
 	for s.Spaces(); s.More(); s.Spaces() {
-		if m := s.Mark(); s.MatchString(`"`) {
-			str := s.Text(m)
-			fmt.Println(strings.ReplaceAll(str, "\n", "\\n"))
-			continue
-		}
+		m := s.Mark()
+		fmt.Println(s.MatchString(`"`), strings.ReplaceAll(s.Text(m), "\n", "\\n"))
 		s.Next()
 	}
 
 	// Output:
-	// ""
-	// "a"
-	// "abc"
-	// "\""
-	// "\"\""
-	// "\"abc\""
-	// "a\"bc"
-	// "ab\n		cd"
+	// true ""
+	// true "a"
+	// true "abc"
+	// true "\""
+	// true "\"\""
+	// true "\"abc\""
+	// true "a\"bc"
+	// true "ab\n		cd"
+	// false "abc\n
 }
 
 func ExampleBytes_TextWith() {
