@@ -8,6 +8,22 @@ import (
 
 type Bytes []byte
 
+func (s *Bytes) MatchNumber() bool {
+	s.Match("-")
+	if b := s.Byte(); b >= '1' && b <= '9' {
+		s.WhileFunc(unicode.IsNumber)
+	} else if !s.Match("0") {
+		return false
+	}
+	if s.Match(".") && !s.WhileFunc(unicode.IsNumber) {
+		return false
+	}
+	if s.MatchChar("eE") && (s.MatchChar("-+") || true) && !s.WhileFunc(unicode.IsNumber) {
+		return false
+	}
+	return true
+}
+
 func (s *Bytes) MatchString(quote string) bool {
 	if s.Match(quote) {
 		for s.More() {

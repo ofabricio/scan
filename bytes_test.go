@@ -32,6 +32,48 @@ func Example() {
 	// KeyB ValB
 }
 
+func ExampleBytes_MatchNumber() {
+
+	s := Bytes(`
+		0
+		-0
+		12390
+		-12390
+		0.0
+		10.1e2
+		10.1e+2
+		10.1e-2
+		10.1E-2
+		10.1e
+		10.1e-
+		10.1e+
+		-
+		0.
+	`)
+
+	for s.Spaces(); s.More(); s.Spaces() {
+		m := s.Mark()
+		fmt.Println(s.MatchNumber(), s.Text(m))
+		s.Next()
+	}
+
+	// Output:
+	// true 0
+	// true -0
+	// true 12390
+	// true -12390
+	// true 0.0
+	// true 10.1e2
+	// true 10.1e+2
+	// true 10.1e-2
+	// true 10.1E-2
+	// false 10.1e
+	// false 10.1e-
+	// false 10.1e+
+	// false -
+	// false 0.
+}
+
 func ExampleBytes_MatchString() {
 
 	s := Bytes(`
